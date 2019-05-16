@@ -5,7 +5,6 @@ namespace TileCli
 {
     public class TaskOfAll
     {
-
         public List<TaskOfZ> TaskOfZs { get; set; } = new List<TaskOfZ>();
 
         public void GenerateTasks(string urlTemplate, string levels, string servers)
@@ -42,25 +41,18 @@ namespace TileCli
                         this.AllTasksGeneratedEvent?.Invoke(this);
                     }
 
-
-
-
-
-
-                    tz.AllTasksFinishedEvent += (a) =>
-                    {
-                        var taskofz = (TaskOfZ)a;
-                        //Console.WriteLine($"Z: {taskofz}")
-                        ;
-                    };
-                    tz.DownTasks();
-
-
+                    #region COMMENT IF YOU DO NOT WANT DOWNLOAD
+                    //tz.AllTasksFinishedEvent += (a) =>
+                    //{
+                    //    var taskofz = (TaskOfZ)a;
+                    //    //Console.WriteLine($"Z: {taskofz}")
+                    //    ;
+                    //};
+                    //tz.DownTasks();
+                    #endregion
                 };
                 taskOfZ_0.GenerateTasks();
-
-
-                ;
+                
             }
         }
         public void DownTasks()
@@ -74,9 +66,11 @@ namespace TileCli
                     var taskofz = (TaskOfZ)a;
                     //Console.WriteLine($"Z: {taskofz}")
 
-                    
-
-                    ;
+                    levelsShouldBeDone--;
+                    if (levelsShouldBeDone == 0)
+                    {
+                        AllTasksFinishedEvent?.Invoke(this);
+                    }
                 };
                 tz.DownTasks();
             }

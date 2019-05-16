@@ -48,6 +48,11 @@ namespace TileCli
             toa.AllTasksGeneratedEvent += (a) =>
             {
                 Console.WriteLine("ALL GENERATED");
+                toa.AllTasksFinishedEvent += (b) =>
+                {
+                    Console.WriteLine("ALL DOWNLOADED");
+                };
+                toa.DownTasks();
             };
             Console.ReadLine();
         }

@@ -10,32 +10,26 @@
     <Grid>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Height="20">
-                <Button Content="Generate" Height="20" VerticalAlignment="Top" Click="Button_Click"></Button>
-                <Button Content="Download"></Button>
+                <Button Content="Generate" Name="GenButton" Height="20" VerticalAlignment="Top" Click="Button_Click"></Button>
+                <Button Content="Download" Name="DownButton" IsEnabled="False" Click="DownButton_Click"></Button>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="30">
 
-                <TextBox  HorizontalAlignment="Stretch" MinWidth="500" Text="https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{0}/{1}/{2}" ></TextBox>
+                <TextBox Name="UrlTemplate"  HorizontalAlignment="Stretch" MinWidth="500" Text="https://services.arcgisonline.com/arcgis/rest/services/World_Imagery/MapServer/tile/{0}/{1}/{2}" ></TextBox>
                 <Label Content="UrlTemplate"></Label>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="30">
-                <TextBox  HorizontalAlignment="Stretch" MinWidth="500" Text="2,3"></TextBox>
+                <TextBox Name="Levels"  HorizontalAlignment="Stretch" MinWidth="500" Text="2,3"></TextBox>
                 <Label Content="Levels(split width ',')"></Label>
             </StackPanel>
             <StackPanel>
                 <ListView x:Name="TileUIListView"  MinHeight="150" MaxHeight="300" Height="300" >
                     <ListView.Resources>
-                        <HierarchicalDataTemplate DataType="{x:Type tilecli:TaskOfZ}">
-
-                            <StackPanel Orientation="Horizontal" Height="40">
-                                <StackPanel Orientation="Vertical" Height="40">
-                                    <TextBox FontSize="12" Text="{Binding Path=UrlTemplate}"></TextBox>
-                                    <TextBox FontSize="12" Text="{Binding Path=DirPath}"></TextBox>
-                                </StackPanel>
+                        <HierarchicalDataTemplate DataType="{x:Type local:TaskOfZExt}">
+                            <StackPanel Orientation="Horizontal" Height="30">
+                                <Label Content="{Binding Mode=OneWay, Path=Z}"></Label>
+                                <TextBox Text="{Binding Path=UrlTemplate}" ></TextBox>
                             </StackPanel>
-
-
-
                         </HierarchicalDataTemplate>
 
                     </ListView.Resources>

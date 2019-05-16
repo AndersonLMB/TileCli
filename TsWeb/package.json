@@ -1,0 +1,16 @@
+{
+  "name": "ts-web",
+  "version": "0.0.0",
+  "description": "TsWeb",
+  "main": "app.js",
+  "author": {
+    "name": ""
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "parcel build --public-url . src/index.html --no-minify"
+  },
+  "devDependencies": {
+    "@types/node": "^8.0.14"
+  }
+}

@@ -12,6 +12,7 @@
             <StackPanel Orientation="Horizontal" Height="20">
                 <Button Content="Generate" Name="GenButton" Height="20" VerticalAlignment="Top" Click="Button_Click"></Button>
                 <Button Content="Download" Name="DownButton" IsEnabled="False" Click="DownButton_Click"></Button>
+                <!--<CheckBox  Name="DownloadAfterGeneratedBtn" Content="Download when generated automatically" IsChecked="False" ></CheckBox>-->
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="30">
 
@@ -26,9 +27,17 @@
                 <ListView x:Name="TileUIListView"  MinHeight="150" MaxHeight="300" Height="300" >
                     <ListView.Resources>
                         <HierarchicalDataTemplate DataType="{x:Type local:TaskOfZExt}">
-                            <StackPanel Orientation="Horizontal" Height="30">
+                            <StackPanel Orientation="Horizontal" Height="40">
                                 <Label Content="{Binding Mode=OneWay, Path=Z}"></Label>
-                                <TextBox Text="{Binding Path=UrlTemplate}" ></TextBox>
+                                <StackPanel Orientation="Vertical">
+                                    <TextBox Text="{Binding Path=UrlTemplate}" Height="20" ></TextBox>
+                                    <ProgressBar MinHeight="20" Width="400" Minimum="0" Maximum="{Binding Path=ShouldBeDone_Xes}" Value="{Binding Path=Finished}"  ></ProgressBar>
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{Binding Path=Finished}"></Label>
+                                    <Label Content=" / "></Label>
+                                    <Label Content="{Binding Path=ShouldBeDone_Xes}"></Label>
+                                </StackPanel>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 

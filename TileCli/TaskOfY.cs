@@ -73,6 +73,7 @@ namespace TileCli
                         else
                         {
                             taskCountOfThisTaskYShouldBeDone--;
+                            
                             //成功
                             //Console.WriteLine($"Done\n{tx.Url}\n{tx.Filename}");
                             if (taskCountOfThisTaskYShouldBeDone == 0)
@@ -83,6 +84,9 @@ namespace TileCli
                         }
                     };
                     wc.DownloadFileAsync(new Uri(tx.Url), tx.Filename);
+
+
+
                 });
 
                 //task.ContinueWith((a) => {

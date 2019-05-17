@@ -53,7 +53,6 @@ namespace TileUI
                 );
             toa.AllTasksGeneratedEvent += (a) =>
             {
-
                 //DownButton.IsEnabled = true;
                 //MessageBox.Show("ALL GENERATED");
                 Dispatcher.Invoke(() =>
@@ -72,9 +71,43 @@ namespace TileUI
                         return new TaskOfZExt()
                         {
                             UrlTemplate = item.UrlTemplate,
-                            Z = item.Z
+                            Z = item.Z,
+                            taskOfYs = item.taskOfYs,
+                            Finished = 0,
+                            ShouldBeDone_Xes = item.taskOfYs.Sum(ty => ty.taskOfXes.Count)
+
                         };
                     }).ToList();
+
+                    ttt.ForEach((tt) =>
+                    {
+                        tt.taskOfYs.ForEach((t) =>
+                        {
+                            Task.Factory.StartNew(() =>
+                            {
+                                var countOfThisY = t.taskOfXes.Count;
+                                t.AllTasksFinishedEvent += (s) =>
+                                {
+                                    tt.Finished += countOfThisY;
+                                    Dispatcher.Invoke(() =>
+                                    {
+                                        lock (TileUIListView)
+                                        {
+                                            TileUIListView.Items.Refresh();
+
+                                        }
+                                    });
+                                };
+                            });
+
+
+
+                            //t.taskOfXes.ForEach((tx) =>
+                            //{
+
+                            //});
+                        });
+                    });
                     TileUIListView.ItemsSource = ttt;// TaskOfAll.TaskOfZs/*.Select((c) => { return (TaskOfZExt)c; })*/;
                     TileUIListView.Items.Refresh();
                 });
@@ -89,6 +122,8 @@ namespace TileUI
                 //};
                 //toa.DownTasks();
             };
+
+
 
 
         }
@@ -135,7 +170,8 @@ namespace TileUI
     }
     public class TaskOfZExt : TaskOfZ
     {
-
+        public int Finished { get; set; } = 0;
+        public int ShouldBeDone_Xes { get; set; }
 
     }
 

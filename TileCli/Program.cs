@@ -62,6 +62,11 @@ namespace TileCli
 
     public delegate void AllTasksFinishedEventHandler(object sender);
 
+    public delegate void TasksFininshedIncreasedBy(object sender, int num, long size);
+    public delegate void TasksGeneratedIncreasedBy(object sender, int num);
+    public delegate void TasksDownloadedSizeIncreasedBy(object sender, int num);
+
+    public delegate void SingleTaskFinished(object sender, long size);
     public interface TaskOfMany
     {
         string UrlTemplate { get; set; }
@@ -75,4 +80,31 @@ namespace TileCli
 
         //AllTasksGeneratedEventHandler AllTasksGeneratedEvent { get; set; }
     }
+    public static class StringUtils
+    {
+        public static string XyzTo012(string xyzString)
+        {
+            var temp = xyzString;
+            temp = temp.Replace(@"{x}", @"{0}");
+            temp = temp.Replace(@"{y}", @"{1}");
+            temp = temp.Replace(@"{z}", @"{2}");
+            temp = temp.Replace(@"{s}", @"{3}");
+            return temp;
+        }
+        public static string SizeToReadable(long size)
+        {
+            string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+            double len = size;
+            int order = 0;
+            while (len >= 1024 && order < sizes.Length - 1)
+            {
+                order++;
+                len = len / 1024;
+            }
+            string result = String.Format("{0:0.##} {1}", len, sizes[order]);
+            return result;
+        }
+
+    }
+
 }

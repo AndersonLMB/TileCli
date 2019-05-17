@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -86,18 +87,35 @@ namespace TileUI
                             Task.Factory.StartNew(() =>
                             {
                                 var countOfThisY = t.taskOfXes.Count;
-                                t.AllTasksFinishedEvent += (s) =>
+                                t.taskOfXes.ForEach((tx) =>
                                 {
-                                    tt.Finished += countOfThisY;
-                                    Dispatcher.Invoke(() =>
+                                    tx.Finished += (aaa, size) =>
                                     {
-                                        lock (TileUIListView)
+                                        tt.Finished++;
+                                        Dispatcher.Invoke(() =>
                                         {
-                                            TileUIListView.Items.Refresh();
+                                            lock (TileUIListView)
+                                            {
+                                                TileUIListView.Items.Refresh();
+                                            }
+                                        });
 
-                                        }
-                                    });
-                                };
+                                    };
+
+                                });
+
+                                //t.AllTasksFinishedEvent += (s) =>
+                                //{
+                                //    tt.Finished += countOfThisY;
+                                //    Dispatcher.Invoke(() =>
+                                //    {
+                                //        lock (TileUIListView)
+                                //        {
+                                //            TileUIListView.Items.Refresh();
+
+                                //        }
+                                //    });
+                                //};
                             });
 
 
@@ -161,6 +179,48 @@ namespace TileUI
 
             };
 
+        }
+
+        private void DownDirectlyButton_Click(object sender, RoutedEventArgs e)
+        {
+            var toa = new TaskOfALLExt();
+            this.TaskOfAll = toa;
+            toa.GenerateTasksAndDownload(urlTemplate: UrlTemplate.Text,
+                levels: Levels.Text,
+                servers: ""
+                );
+
+            toa.TasksGeneratedIncreasedByEvent += (s, ee) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    lock (GenNum)
+                    {
+                        GenNum.Content = (int.Parse(GenNum.Content.ToString()) + ee).ToString();
+                    }
+                });
+                //Trace.WriteLine(ee);
+                //;
+            };
+
+            toa.TasksFininshedIncreasedByEvent += (s, ee, size) =>
+            {
+                Dispatcher.Invoke(() =>
+                {
+                    lock (FinNum)
+                    {
+                        FinNum.Content = (int.Parse(FinNum.Content.ToString()) + ee).ToString();
+                    }
+
+                    lock (FinSize)
+                    {
+
+
+                        FinSize.Content = (long.Parse(FinSize.Content.ToString()) + size).ToString();
+                        GenSize.Content = StringUtils.SizeToReadable(long.Parse(FinSize.Content.ToString()));
+                    }
+                });
+            };
         }
     }
 

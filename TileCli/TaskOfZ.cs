@@ -92,6 +92,63 @@ namespace TileCli
 
         }
 
+        public void GenerateTasksAndDownload()
+        {
+            var countOofTaskYShouldBeGenerated = (int)Math.Round(Math.Pow(2, Z));
+            var countOfFullYTask = 0;
+            for (int y = 0; y < countOofTaskYShouldBeGenerated; y++)
+            {
+                var currentY = y;
+                lock (taskOfYs)
+                {
+                    Task.Factory.StartNew(() =>
+                    {
+                        var taskofY = new TaskOfY()
+                        {
+                            UrlTemplate = string.Format(UrlTemplate, "", currentY.ToString(), "{2}"),
+                            Y = currentY,
+                            Z = Z
+                        };
+                        taskOfYs.Add(taskofY);
+
+                        taskofY.TasksGeneratedIncreasedByEvent += (s, e) =>
+                        {
+                            TasksGeneratedIncreasedByEvent?.Invoke(this, e);
+                        };
+
+                        if (!Directory.Exists(Path.Combine(DirPath, $"{taskofY.Y}")))
+                        {
+                            taskofY.DirPath = Directory.CreateDirectory(Path.Combine(DirPath, $"{taskofY.Y}")).FullName;
+                        }
+                        taskofY.DirPath = new DirectoryInfo(Path.Combine(DirPath, $"{taskofY.Y}")).FullName;
+
+                        taskofY.TasksFininshedIncreasedByEvent += (s, e,size) =>
+                        {
+                            TasksFininshedIncreasedByEvent?.Invoke(this, e,size);
+                        };
+
+                        taskofY.GenerateTasksAndDownload();
+
+
+
+                        //Console.WriteLine(taskofY.Y);
+                        //Console.WriteLine(taskofY.UrlTemplate);
+
+                        ////该Z层的所有Y均完成创建
+                        //if (taskOfYs.Count == countOofTaskYShouldBeGenerated)
+                        //{
+                        //    AllTasksGeneratedEvent?.Invoke(this);
+                        //    //if (this.AllTasksGeneratedEvent != null)
+                        //    //{
+                        //    //    //this.AllTasksGeneratedEvent
+                        //    //}
+                        //}
+                    });
+                }
+            }
+        }
         public event AllTasksFinishedEventHandler AllTasksFinishedEvent;
+        public event TasksFininshedIncreasedBy TasksFininshedIncreasedByEvent;
+        public event TasksGeneratedIncreasedBy TasksGeneratedIncreasedByEvent;
     }
 }

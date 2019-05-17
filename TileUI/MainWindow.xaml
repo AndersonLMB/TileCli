@@ -6,12 +6,14 @@
         xmlns:local="clr-namespace:TileUI"
         xmlns:tilecli="clr-namespace:TileCli;assembly=TileCli"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="600" Width="800">
     <Grid>
         <StackPanel Orientation="Vertical">
             <StackPanel Orientation="Horizontal" Height="20">
                 <Button Content="Generate" Name="GenButton" Height="20" VerticalAlignment="Top" Click="Button_Click"></Button>
                 <Button Content="Download" Name="DownButton" IsEnabled="False" Click="DownButton_Click"></Button>
+                <Button Content="DownloadDirectly" Name="DownDirectlyButton" IsEnabled="True" Click="DownDirectlyButton_Click"></Button>
+
                 <!--<CheckBox  Name="DownloadAfterGeneratedBtn" Content="Download when generated automatically" IsChecked="False" ></CheckBox>-->
             </StackPanel>
             <StackPanel Orientation="Horizontal" Height="30">
@@ -47,7 +49,20 @@
 
                 </ListView>
             </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="0" Name="FinNum"></Label>
+                <Label Content=" / "></Label>
+                <Label Content="0" Name="GenNum"></Label>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="0" Name="FinSize"></Label>
+                <Label Content=" Downloaded Size / "></Label>
+                <Label Content="0" Name="GenSize"></Label>
+                <Label Content="  Size"></Label>
+            </StackPanel>
+
         </StackPanel>
+
 
     </Grid>
 </Window>

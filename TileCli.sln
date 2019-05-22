@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileCli", "TileCli\TileCli.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TileUI", "TileUI\TileUI.csproj", "{40D7B5B6-8448-4591-9695-1D952935FC04}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleCli", "SimpleCli\SimpleCli.csproj", "{A1E60E63-C864-4463-837A-D8591C5660C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{40D7B5B6-8448-4591-9695-1D952935FC04}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40D7B5B6-8448-4591-9695-1D952935FC04}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40D7B5B6-8448-4591-9695-1D952935FC04}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1E60E63-C864-4463-837A-D8591C5660C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1E60E63-C864-4463-837A-D8591C5660C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1E60E63-C864-4463-837A-D8591C5660C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1E60E63-C864-4463-837A-D8591C5660C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
